@@ -29,20 +29,19 @@ enum position {
 class cube
 {
 public:
-	cube();
-	~cube();
 	virtual void moveto(position pos) = 0;
 };
-class angle:cube
+class angle:public cube
 {
 public:
 	angle();
+	angle(int a, int b, int c, position p) :color{ a,b,c }, pos(p){};
 	~angle();
 	void moveto(position pos);
 	int color[3];
 	position pos;
 };
-class edge:cube
+class edge:public cube
 {
 public:
 	edge();
@@ -51,7 +50,7 @@ public:
 	int color[2];
 	position pos;
 };
-class fcenter :cube
+class fcenter :public cube
 {
 public:
 	fcenter();
@@ -63,23 +62,18 @@ public:
 class magiccube
 {
 public:
-	magiccube();
+	magiccube() /*:pcube{} {}*/;
 	~magiccube();
 	
-	class onpos
-	{
-	public:
-		cube* pcube;
-	};
 	void find(position pos,cube* );
 	void ResetAllOnpos();
 	
 	
 	void F();
 	void F_();
+	cube* pcube[26];
 private:
 	angle anglebox[8];
 	edge edgebox[12];
-	onpos onpos[26];
 };
 

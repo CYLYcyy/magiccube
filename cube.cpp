@@ -1,20 +1,16 @@
 #include "cube.h"
 
 #define MOVE(a,b) \
-onpos[int(a)].pcube->moveto(b);\
+pcube[int(a)]->moveto(b);\
 //onpos[(int(b)-1)].pcube->moveto(b);\
 
-cube::cube()
-{
-
-}
-
-cube::~cube()
-{
-
-}
-
 angle::angle()
+{
+
+}
+
+angle::angle(int a,int b,int c,position p)
+	:color{a,b,c},pos(p)
 {
 
 }
@@ -48,10 +44,13 @@ void edge::moveto(position pos)
 
 magiccube::magiccube()
 {
+	for(int i=0;i<26;i++)
+		pcube[i] = nullptr;
 }
 
 magiccube::~magiccube()
 {
+	
 }
 
 void magiccube::find(position pos,cube* pcube)
@@ -59,18 +58,25 @@ void magiccube::find(position pos,cube* pcube)
 	for (int i = 0; i < 8; i++)
 	{
 		if (anglebox[i].pos == pos)
-			pcube = anglebox + i;
+		{
+			pcube = &(anglebox[i]);
+			return;
+		}
 	}
+	for (int i = 0; i < 12; i++)
 	{
-		if ();
+		if (edgebox[i].pos == pos)
+		{
+			pcube = &(edgebox[i]);
+			return;
+		}
 	}
-	return nullptr;
 }
 
 void magiccube::ResetAllOnpos()
 {
 	for (int i = 0; i < 26; i++)
-		find(position(i), onpos[i].pcube);
+		find(position(i), pcube[i]);
 }
 
 void magiccube::F()
