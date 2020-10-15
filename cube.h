@@ -1,40 +1,47 @@
-enum class position {
-	aaa,
-	caa,
-	aac,
-	cac,
-	aca,
-	cca,
-	acc,
-	ccc,
-	baa,
-	bca,
-	bac,
-	bcc,
-	aba,
-	cba,
-	abc,
-	cbc,
-	aab,
-	cab,
-	acb,
-	ccb,
+//enum class pos {
+//	aaa,
+//	caa,
+//	aac,
+//	cac,
+//	aca,
+//	cca,
+//	acc,
+//	ccc,
+//	baa,
+//	bca,
+//	bac,
+//	bcc,
+//	aba,
+//	cba,
+//	abc,
+//	cbc,
+//	aab,
+//	cab,
+//	acb,
+//	ccb,
+//};
+class coordinate 
+{
+public:
+	coordinate() {};
+	coordinate(int a, int b, int c) :x(a), y(b), z(c) {};
+	int x = 0;
+	int y = 0;
+	int z = 0;
 };
 class cube
 {
 public:
-	cube();
-	cube(int a, int b, int c, int p) :color{ a,b,c }, pos(position(p)){};
-
-	void F();
-	void F_();
-	void U();
-	void U_();
-	void L();
-	void L_();
-
+	cube() :color{ 0,0,0 }, pos(0, 0, 0){};
+	cube(int a, int b, int c, int x, int y, int z) :color{ a,b,c }, pos(x, y, z){};
+	void YS();
+	void YN();
+	void XS();
+	void XN();
+	void ZS();
+	void ZN();
 	int color[3];
-	position pos;
+	coordinate pos;
 };
 
 class magiccube
@@ -43,13 +50,20 @@ public:
 	magiccube() /*:pcube{} {}*/;
 	~magiccube();
 	
-	void find(position pos,cube*& );
-	void ResetAllpointers();
-	
-	
 	void F();
 	void F_();
-	cube* pcube[26];
+	void B();
+	void B_();
+	void U();
+	void U_();
+	void D();
+	void D_();
+	void L();
+	void L_();
+	void R();
+	void R_();
+
+
 private:
 	cube cubebox[26];
 };
