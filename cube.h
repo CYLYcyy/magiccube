@@ -63,7 +63,6 @@ public:
 	void R();
 	void R_();
 
-
 private:
 	cube cubebox[26];
 };

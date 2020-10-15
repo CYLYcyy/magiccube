@@ -195,6 +195,7 @@ void magiccube::U()
 
 void magiccube::U_()
 {
+
 }
 
 void magiccube::D()
