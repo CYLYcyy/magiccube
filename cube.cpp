@@ -1,91 +1,32 @@
 #include "cube.h"
 
+#include<iostream>
+
 //交换
 #define change(x, y) \
 	t = x;\
 	x = y;\
 	y = t;
 
-//旋转
-#define c1(x, y) \
+//旋转时坐标变换
+#define revolve(x, y) \
 	t = x;\
 	x = -y;\
 	y = t;
-
-
-//移动判断
-#define move(x,y) \
-	case position::x:\
-		pos = position::y;\
-		break
 
 //绕y轴平行线顺时针
 void cube::YS()
 {
 	int t;
 	change(color[0], color[2]);
-	c1(pos.z, pos.x);
-	//switch (pos)
-	//{
-	//	//角
-	//	move(aaa, aac);
-	//	move(aac, cac);
-	//	move(cac, caa);
-	//	move(caa, aaa);
-	//	move(aca, acc);
-	//	move(acc, ccc);
-	//	move(ccc, caa);
-	//	move(cca, aca);
-	//	//边
-	//	move(baa, aab);
-	//	move(bca, acb);
-	//	move(bac, cab);
-	//	move(bcc, ccb);
-	//	move(aba, abc);
-	//	move(cba, aba);
-	//	move(abc, cbc);
-	//	move(cbc, cba);
-	//	move(aab, bac);
-	//	move(cab, baa);
-	//	move(acb, bcc);
-	//	move(ccb, bca);
-	//default:
-	//	break;
-	//}
+	revolve(pos.z, pos.x);
 }
 //绕y轴平行线逆时针
 void cube::YN()
 {
 	int t;
 	change(color[0], color[2]);
-	c1(pos.x,pos.z)
-	//switch (pos)
-	//{
-	//	//角
-	//	move(aaa, caa);
-	//	move(aac, aaa);
-	//	move(cac, aac);
-	//	move(caa, cac);
-	//	move(aca, cca);
-	//	move(acc, aca);
-	//	move(ccc, acc);
-	//	move(cca, ccc);
-	//	//边
-	//	move(baa, cab);
-	//	move(bca, ccb);
-	//	move(bac, aab);
-	//	move(bcc, acb);
-	//	move(aba, cba);
-	//	move(cba, cbc);
-	//	move(abc, aba);
-	//	move(cbc, abc);
-	//	move(aab, baa);
-	//	move(cab, bac);
-	//	move(acb, bca);
-	//	move(ccb, bcc);
-	//default:
-	//	break;
-	//}
+	revolve(pos.x,pos.z)
 }
 
 //绕x
@@ -93,28 +34,28 @@ void cube::XS()
 {
 	int t;
 	change(color[1], color[2]);
-	c1(pos.z, pos.y);
+	revolve(pos.z, pos.y);
 }
 
 void cube::XN()
 {
 	int t;
 	change(color[1], color[2]);
-	c1(pos.y, pos.z);
+	revolve(pos.y, pos.z);
 }
 
 void cube::ZS()
 {
 	int t;
 	change(color[0], color[1]);
-	c1(pos.y, pos.x);
+	revolve(pos.y, pos.x);
 }
 
 void cube::ZN()
 {
 	int t;
 	change(color[0], color[1]);
-	c1(pos.x, pos.y);
+	revolve(pos.x, pos.y);
 }
 
 
@@ -141,6 +82,12 @@ magiccube::magiccube()
 	cubebox[17] = cube(4, 1, 0, 1, -1, 0);
 	cubebox[18] = cube(2, 6, 0, -1, 1, 0);
 	cubebox[19] = cube(4, 6, 0, 1, 1, 0);
+	cubebox[20] = cube(0, 1, 0, 0, -1, 0);
+	cubebox[21] = cube(2, 0, 0, -1, 0, 0);
+	cubebox[22] = cube(0, 0, 3, 0, 0, 1);
+	cubebox[23] = cube(4, 0, 0, 1, 0, 0);
+	cubebox[24] = cube(0, 0, 5, 0, 0, -1);
+	cubebox[25] = cube(0, 6, 0, 0, 1, 0);
 }
 
 magiccube::~magiccube()
@@ -195,34 +142,142 @@ void magiccube::U()
 
 void magiccube::U_()
 {
-
+	for (int i = 0; i < 26; i++)
+	{
+		if (cubebox[i].pos.z == 1)
+			cubebox[i].ZN();
+	}
 }
 
 void magiccube::D()
 {
+	for (int i = 0; i < 26; i++)
+	{
+		if (cubebox[i].pos.z == -1)
+			cubebox[i].ZS();
+	}
 }
 
 void magiccube::D_()
 {
+	for (int i = 0; i < 26; i++)
+	{
+		if (cubebox[i].pos.z == -1)
+			cubebox[i].ZN();
+	}
 }
 
 void magiccube::L()
 {
+	for (int i = 0; i < 26; i++)
+	{
+		if (cubebox[i].pos.x == -1)
+			cubebox[i].XS();
+	}
 }
 
 void magiccube::L_()
 {
+	for (int i = 0; i < 26; i++)
+	{
+		if (cubebox[i].pos.x == -1)
+			cubebox[i].XN();
+	}
 }
 
 void magiccube::R()
 {
+	for (int i = 0; i < 26; i++)
+	{
+		if (cubebox[i].pos.x == -1)
+			cubebox[i].XS();
+	}
 }
 
 void magiccube::R_()
 {
+	for (int i = 0; i < 26; i++)
+	{
+		if (cubebox[i].pos.x == -1)
+			cubebox[i].ZN();
+	}
+}
+
+bool magiccube::recovered() const
+{
+	bool re = false;
+	int num = 0;
+	int colorvector[6][9];
+	int j[6] = { 0,0,0,0,0,0 };
+	for (int i = 0; i < 26; i++)
+	{
+		if (cubebox[i].pos.y == -1)
+			colorvector[0][j[0]++] = cubebox[i].color[1];
+		if (cubebox[i].pos.x == -1)
+			colorvector[1][j[1]++] = cubebox[i].color[0];
+		if (cubebox[i].pos.z == 1)
+			colorvector[2][j[2]++] = cubebox[i].color[2];
+		if (cubebox[i].pos.x == 1)
+			colorvector[3][j[3]++] = cubebox[i].color[0];
+		if (cubebox[i].pos.z == -1)
+			colorvector[4][j[4]++] = cubebox[i].color[2];
+		if (cubebox[i].pos.y == 1)
+			colorvector[5][j[5]++] = cubebox[i].color[1];
+	}
+	for (int i = 0; i < 6; i++)
+	{
+		for (int j = 0; j < 9; j++)
+		{
+			if (colorvector[i][j] != colorvector[i][0])
+				break;
+			else if (j == 8)
+				num++;
+		}
+		if (num == 6)
+			re = true;
+	}
+	return re;
+}
+
+void magiccube::show() const
+{
+	int colorvector[6][9];
+	int j[6] = { 0,0,0,0,0,0 };
+	for (int i = 0; i < 26; i++)
+	{
+		if (cubebox[i].pos.y == -1)
+			colorvector[0][j[0]++] = cubebox[i].color[1];
+		if (cubebox[i].pos.x == -1)
+			colorvector[1][j[1]++] = cubebox[i].color[0];
+		if (cubebox[i].pos.z == 1)
+			colorvector[2][j[2]++] = cubebox[i].color[2];
+		if (cubebox[i].pos.x == 1)
+			colorvector[3][j[3]++] = cubebox[i].color[0];
+		if (cubebox[i].pos.z == -1)
+			colorvector[4][j[4]++] = cubebox[i].color[2];
+		if (cubebox[i].pos.y == 1)
+			colorvector[5][j[5]++] = cubebox[i].color[1];
+	}
+	for (int i = 0; i < 6; i++)
+	{
+		for (int j = 0; j < 9; j++)
+		{
+			std::cout << colorvector[i][j] << "  ";
+			/*if (colorvector[i][j] != colorvector[i][0])
+				break;
+			else
+				re = true;*/
+		}
+		std::cout << std::endl;
+	}
 }
 
 int main()
 {
+	magiccube mycube;
+	mycube.F();
+	mycube.F_();
+	mycube.show();
+	std::cout<<mycube.recovered();
 	return 0;
 }

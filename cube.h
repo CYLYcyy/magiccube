@@ -62,7 +62,8 @@ public:
 	void L_();
 	void R();
 	void R_();
-
+	bool recovered() const;
+	void show() const;
 private:
 	cube cubebox[26];
 };
