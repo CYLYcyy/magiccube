@@ -1,25 +1,3 @@
-//enum class pos {
-//	aaa,
-//	caa,
-//	aac,
-//	cac,
-//	aca,
-//	cca,
-//	acc,
-//	ccc,
-//	baa,
-//	bca,
-//	bac,
-//	bcc,
-//	aba,
-//	cba,
-//	abc,
-//	cbc,
-//	aab,
-//	cab,
-//	acb,
-//	ccb,
-//};
 class coordinate 
 {
 public:
@@ -29,6 +7,7 @@ public:
 	int y = 0;
 	int z = 0;
 };
+
 class cube
 {
 public:
@@ -62,8 +41,12 @@ public:
 	void L_();
 	void R();
 	void R_();
+	
+	void step(char X);
 	bool recovered() const;
-	void show() const;
+	cube* getcube(coordinate x);
+	void showcolor(int color);
+	void show();
 private:
 	cube cubebox[26];
 };
