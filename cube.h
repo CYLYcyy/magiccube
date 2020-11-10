@@ -43,7 +43,7 @@ public:
 	void R_();
 	
 	void step(char X);
-	bool recovered() const;
+	bool restored() const;
 	cube* getcube(coordinate x);
 	void showcolor(int color);
 	void show();

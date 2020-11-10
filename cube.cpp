@@ -191,7 +191,7 @@ void magiccube::R()
 {
 	for (int i = 0; i < 26; i++)
 	{
-		if (cubebox[i].pos.x == -1)
+		if (cubebox[i].pos.x == 1)
 			cubebox[i].XS();
 	}
 }
@@ -200,8 +200,8 @@ void magiccube::R_()
 {
 	for (int i = 0; i < 26; i++)
 	{
-		if (cubebox[i].pos.x == -1)
-			cubebox[i].ZN();
+		if (cubebox[i].pos.x == 1)
+			cubebox[i].XN();
 	}
 }
 
@@ -250,9 +250,11 @@ void magiccube::step(char X)
 		break;
 	}
 	show();
+	if (restored())
+		cout << "Congratulations:Your cube is restored!" << endl;
 }
 
-bool magiccube::recovered() const
+bool magiccube::restored() const
 {
 	bool re = false;
 	int num = 0;
@@ -298,6 +300,7 @@ cube* magiccube::getcube(coordinate x)
 			return pcube;
 		}
 	}
+	return nullptr;
 }
 
 void magiccube::showcolor(int color)
@@ -327,7 +330,7 @@ void magiccube::showcolor(int color)
 	default:
 		break;
 	}
-	std::cout << " ¡ö ";
+	std::cout << "¡ö";
 	
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), csbiInfo.wAttributes);
 }
@@ -336,20 +339,66 @@ void magiccube::show()
 {
 	for (int i = 0; i < 3; i++)
 	{
+		if (i == 0)
+			cout << "                 UP:";
+		else
+			cout << "                    ";
+		
 		for (int j = 0; j < 3; j++)
 		{
-			showcolor(getcube(coordinate(j-1, 1-i, 1))->color[1]);
+			showcolor(getcube(coordinate(j - 1, 1 - i, 1))->color[2]);
 		}
-
+		if (i == 0)
+			cout << "  BACK:";
+		else
+			cout << "       ";
+		cout << "  ";
 		for (int j = 0; j < 3; j++)
 		{
-			showcolor(getcube(coordinate(j - 1, 1 - i, 1))->color[1]);
+			showcolor(getcube(coordinate(j - 1, 1, 1 - i))->color[1]);
 		}
-
+		cout << endl;
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		if (i == 0)
+			cout << "  LEFT:";
+		else
+			cout << "       ";
 		for (int j = 0; j < 3; j++)
 		{
-			showcolor(getcube(coordinate(j - 1, 1 - i, 1))->color[1]);
+			showcolor(getcube(coordinate(-1, 1 - j, 1 - i))->color[0]);
 		}
+		if (i == 0)
+			cout << "  FACE:";
+		else
+			cout << "       ";
+		for (int j = 0; j < 3; j++)
+		{
+			showcolor(getcube(coordinate(j - 1, -1, 1 - i))->color[1]);
+		}
+		if (i == 0)
+			cout << " RIGHT:";
+		else
+			cout << "       ";
+		cout << "  ";
+		for (int j = 0; j < 3; j++)
+		{
+			showcolor(getcube(coordinate(1, j - 1, 1 - i))->color[0]);
+		}
+		cout << endl;
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		if (i == 0)
+			cout << "               DOWN:";
+		else
+			cout << "                    ";
+		for (int j = 0; j < 3; j++)
+		{
+			showcolor(getcube(coordinate(j - 1, i - 1, -1))->color[2]);
+		}
+		cout << endl;
 	}
 }
 
@@ -361,7 +410,7 @@ int main()
 	bool flag = true;
 	while (flag)
 	{
-		cout << "(Commands Allowed: F,f,B,b,U,u,D,d,L,l,R,r)" << endl;
+		cout << "Commands Allowed: (F,f,B,b,U,u,D,d,L,l,R,r)" << endl;
 		cout << "press Enter after input£º";
 		std::cin >> X;
 		mycube.step(X);
